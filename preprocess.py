@@ -1,6 +1,6 @@
 import pandas as pd
 from collections import defaultdict
-
+from FeatExtract import *
 
 def makeBrandPop(data,attrName):
     #制作属性:商品商标被访问次数
@@ -50,20 +50,25 @@ def make_inter(data):
     data["second_cate"] = second_cate
     return data
 
+# def makePreHit(data):
+#    return data[["is_trade","first_cate","user_id","context_timestamp"]].groupby(["is_trade","first_cate","user_id"]).count()
 
 
-def makePreHit(data):
-   return data[["is_trade","first_cate","user_id","context_timestamp"]].groupby(["is_trade","first_cate","user_id"]).count()
-data = pd.read_csv("test.csv")
-# data = pd.read_csv("train.csv")
-#makePreHit(data).to_csv("haha.csv")
+def pre():
+    data = pd.read_csv("test.csv",sep=" ")
+    # data = pd.read_csv("test.csv")
+    data = make_inter(data)
+    data.to_csv("te.csv",index= False)
 
-data = make_inter(data)
-data = makeBrandPop(data,"item_brand_id")
-# data.loc[(data["brand_pop"]<200,"item_brand_id")] = -1
-#print(len(data["item_brand_id"].drop_duplicates(inplace=False).values))
-#data.to_csv("tr1.csv",index = False)
-# data = pd.read_csv("test.csv")
-#data.to_csv("tr.csv",index= False)
-data.to_csv("te.csv",index= False)
+    data = pd.read_csv("train.csv",sep=" ")
+    # data = pd.read_csv("test.csv")
+    data = make_inter(data)
+    data.to_csv("tr.csv",index= False)
+
 # process(data).to_csv("te.csv",index = False)
+
+# train = pd.read_csv("tr1.csv")
+# test = pd.read_csv("te1.csv")
+# train,test = shop_feat(train,test)
+# train.to_csv("tr2.csv",index = False)
+# test.to_csv("te2.csv",index = False)
